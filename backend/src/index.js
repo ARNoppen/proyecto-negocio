@@ -20,9 +20,24 @@ const errorHandler = require('./middlewares/error.middleware');
 const app = express();
 
 // Configuración de CORS dinámico para producción y local
-const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+const frontendUrl = (process.env.FRONTEND_URL || 'http://localhost:5173').replace(/\/+$/, '');
 app.use(cors({
-    origin: frontendUrl,
+    origin: function (origin, callback) {
+        // Permitir requests sin origin (Postman, curl, health checks)
+        if (!origin) return callback(null, true);
+
+        const allowedOrigins = [
+            frontendUrl,
+            'http://localhost:5173'
+        ];
+
+        // Permitir el origin exacto o cualquier preview de Vercel del proyecto
+        if (allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+            return callback(null, origin);
+        }
+
+        callback(new Error('Bloqueado por CORS'));
+    },
     credentials: true
 }));
 app.use(express.json());
