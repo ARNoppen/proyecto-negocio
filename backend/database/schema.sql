@@ -1,5 +1,4 @@
-CREATE DATABASE IF NOT EXISTS proyecto_negocio;
-USE proyecto_negocio;
+-- Las tablas se crean en la base de datos especificada en la conexión
 
 -- Businesses
 CREATE TABLE IF NOT EXISTS businesses (

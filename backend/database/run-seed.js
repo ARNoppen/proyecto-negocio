@@ -7,10 +7,11 @@ async function runSeed() {
     console.log('Iniciando creación de esquema y población de datos iniciales...');
     
     const dbConfig = {
-        host: process.env.DB_HOST,
-        port: Number(process.env.DB_PORT),
-        user: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
+        host: process.env.MYSQLHOST || process.env.DB_HOST || 'localhost',
+        port: Number(process.env.MYSQLPORT || process.env.DB_PORT || 3306),
+        user: process.env.MYSQLUSER || process.env.DB_USER || 'root',
+        password: process.env.MYSQLPASSWORD || process.env.DB_PASSWORD || '',
+        database: process.env.MYSQLDATABASE || process.env.DB_NAME || 'proyecto_negocio',
         multipleStatements: true
     };
     
@@ -18,6 +19,7 @@ async function runSeed() {
     console.log(`Host: ${dbConfig.host}`);
     console.log(`Port: ${dbConfig.port}`);
     console.log(`User: ${dbConfig.user}`);
+    console.log(`Database: ${dbConfig.database}`);
     console.log('---------------------------');
 
     try {
