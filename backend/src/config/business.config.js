@@ -3,5 +3,5 @@
  * En una etapa futura, esto podría venir de una tabla de configuración o dominio.
  */
 module.exports = {
-    DEFAULT_BUSINESS_ID: 2
+    DEFAULT_BUSINESS_ID: 1
 };
